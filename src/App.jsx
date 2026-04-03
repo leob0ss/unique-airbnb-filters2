@@ -65,6 +65,9 @@ const INITIAL_COUNT = 4
 
 const isMobile = /Mobi|Android|iPhone|iPad|iPod/i.test(navigator.userAgent)
 
+const timezone = Intl.DateTimeFormat().resolvedOptions().timeZone
+const isNonUS = !timezone.startsWith('America/') && timezone !== 'Pacific/Honolulu'
+
 function buildAirbnbUrl(category, location) {
   const loc = location.trim()
   const path = loc ? `${encodeURIComponent(loc)}/homes` : 'homes'
@@ -111,20 +114,18 @@ export default function App() {
 
   return (
     <main className="container">
-      {isMobile && (
-        <div className="mobile-banner">
-          <span className="mobile-banner-icon">💻</span>
-          <p className="mobile-banner-text">
-            This tool only works on desktop.
-          </p>
-        </div>
-      )}
+      <div className="mobile-banner">
+        <span className="mobile-banner-icon">💻</span>
+        <p className="mobile-banner-text">
+          This tool only works in the <strong>USA</strong> on <strong>desktop</strong>.
+        </p>
+      </div>
       <header className="header">
         <h1 className="title">
           Find unique Airbnbs
         </h1>
         <p className="subtitle">
-          In 2025, Airbnb removed unique property categories from their platform. It's unclear why they did, but I made this simple tool to use them again. It works by editing the URL to force Airbnb to surface those hidden categories.
+          In 2025, Airbnb removed unique property categories from their platform. It's unclear why they did, but this tool allows you to find them once again. It works by editing the URL to force Airbnb to surface those hidden categories.
         </p>
         <p className="disclaimer">Not affiliated with Airbnb.</p>
       </header>
